@@ -1,0 +1,22 @@
+.asset{
+  border: 1px ridge gray;
+  border-radius: 1em;
+  margin: 0.2em;
+  padding: 1em;
+}
+.asset-title{
+  background-color: black;
+  color: white;
+}
+.asset-header{
+  padding: 0;
+}
+.inv,.profits{
+
+}
+.profits{
+
+}
+.actions{
+
+}
