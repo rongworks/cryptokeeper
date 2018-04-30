@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import Inventory from './components/inventory/inventory.js'
 import './App.css';
 
