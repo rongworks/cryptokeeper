@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from "react-redux";
+
 import Asset from './asset.js'
-import './inventory.css'
+import AssetForm from './asset_form.js';
+import {deleteAsset, saveAssets} from '../../actions/actions.js';
+
+import './inventory.css';
 
 class Inventory extends Component {
   constructor(props) {
@@ -10,66 +15,66 @@ class Inventory extends Component {
   }
 
   componentDidMount() {
-    var inv = localStorage.getItem('ixpkg9vu7zztGj9908JDSuusjak');
-    if(!inv){
-      alert('no data found: '+inv);
-      inv = [
-        {
-          id: 1,
-          market:'kraken',
-          asset:'eth',
-          quote:'eur',
-          amount: 2,
-          price: 479.76,
-          date: '2018-04-20'
-        },
-        {
-          id: 2,
-          market:'kraken',
-          asset:'str',
-          quote:'eur',
-          amount: 60,
-          price: 0.300000,
-          date: '2018-04-21'
-        },
-        {
-          id: 3,
-          market:'kraken',
-          asset:'eos',
-          quote:'eur',
-          amount: 10,
-          price: 9.4499,
-          date: '2018-04-23'
-        },
-        {
-          id: 4,
-          market:'kraken',
-          asset:'eos',
-          quote:'eur',
-          amount: 20,
-          price: 13.5000,
-          date: '2018-04-27'
-        },
-
-      ]
-    }
-    else{
-      inv = JSON.parse(inv);
-    }
-    this.setState({
-      inventory: inv
-    });
-    this.saveAssets(inv);
+    // var inv = localStorage.getItem('ixpkg9vu7zztGj9908JDSuusjak');
+    // if(!inv){
+    //   alert('no data found: '+inv);
+    //   inv = [
+    //     {
+    //       id: 1,
+    //       market:'kraken',
+    //       asset:'eth',
+    //       quote:'eur',
+    //       amount: 2,
+    //       price: 479.76,
+    //       date: '2018-04-20'
+    //     },
+    //     {
+    //       id: 2,
+    //       market:'kraken',
+    //       asset:'str',
+    //       quote:'eur',
+    //       amount: 60,
+    //       price: 0.300000,
+    //       date: '2018-04-21'
+    //     },
+    //     {
+    //       id: 3,
+    //       market:'kraken',
+    //       asset:'eos',
+    //       quote:'eur',
+    //       amount: 10,
+    //       price: 9.4499,
+    //       date: '2018-04-23'
+    //     },
+    //     {
+    //       id: 4,
+    //       market:'kraken',
+    //       asset:'eos',
+    //       quote:'eur',
+    //       amount: 20,
+    //       price: 13.5000,
+    //       date: '2018-04-27'
+    //     },
+    //
+    //   ]
+    // }
+    // else{
+    //   inv = JSON.parse(inv);
+    // }
+    // this.setState({
+    //   inventory: inv
+    // });
+    // this.saveAssets(inv);
   }
 
   componentWillUnmount() {
 
   }
 
-  saveAssets(assets){
-    localStorage.setItem('ixpkg9vu7zztGj9908JDSuusjak',JSON.stringify(assets));
-    console.log('saved '+JSON.stringify(assets));
-  }
+  // saveAssets(assets){
+  //   localStorage.setItem('ixpkg9vu7zztGj9908JDSuusjak',JSON.stringify(assets));
+  //   console.log('saved '+JSON.stringify(assets));
+  // }
 
   clearAssets(){
     this.setState({inventory: []});
@@ -110,10 +115,14 @@ class Inventory extends Component {
     this.setState({inventory: this.state.inventory.concat(new_asset), new_asset: {id:'',asset:'',quote:'',amount:0,price:0,date:''}, next_id: next_id });
   }
 
+  saveAssets() {
+    var assets = this.props.assets;
+    this.props.saveAssets(assets);
+  }
+
   render() {
     //var trades = this.state.trades;
-    var new_asset = this.state.new_asset;
-    var assets = this.state.inventory.map( (asset, index) =>
+    var inv = this.props.assets.map( (asset, index) =>
     <Asset
       id={asset.id}
       market={asset.market}
@@ -123,48 +132,22 @@ class Inventory extends Component {
       price={asset.price}
       date={asset.date}
       key={asset.id}
+      deleteAsset={this.props.deleteAsset}
       />
     );
     return (
       <div>
         <h1>CryptoKeeper</h1>
         <button className="btn btn-secondary float-right" onClick={this.clearAssets}>Delete</button>
+        <button className="btn btn-secondary float-right" onClick={this.saveAssets.bind(this)}>Save</button>
+        <button className="btn btn-primary" type="button" data-toggle="collapse" data-target="#form-new-asset"
+          aria-expanded="false" aria-controls="form-new-assets">
+          New Asset
+        </button>
         <h2 className="text-left">Your Inventory</h2>
-        <form>
-          <input type="text"
-            placeholder="market"
-            name="market"
-            onChange={this.handleInputChange.bind(this)}>
-          </input>
-          <input type="text"
-            placeholder="asset"
-            name="asset"
-            onChange={this.handleInputChange.bind(this)}>
-          </input>
-          <input type="text"
-            placeholder="quote"
-            name="quote"
-            onChange={this.handleInputChange.bind(this)}>
-          </input>
-          <input type="text"
-            placeholder="price"
-            name="price"
-            onChange={this.handleInputChange.bind(this)}>
-          </input>
-          <input type="text"
-            placeholder="amount"
-            name="amount"
-            onChange={this.handleInputChange.bind(this)}>
-          </input>
-          <input type="text"
-            placeholder="date"
-            name="date"
-            onChange={this.handleInputChange.bind(this)}>
-          </input>
-          <button type="button" onClick={this.addAsset.bind(this)}>Add</button>
-        </form>
+        <AssetForm date={new Date()} />
         <div className="row">
-          {assets}
+          {inv}
         </div>
         <div>{JSON.stringify(this.state)}</div>
 
@@ -173,4 +156,14 @@ class Inventory extends Component {
   }
 }
 
-export default Inventory;
+const mapStateToProps = state => {
+  return { assets: state.assets };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    saveAssets: assets => dispatch(saveAssets(assets)),
+    deleteAsset: asset => dispatch(deleteAsset(asset))
+  };
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(Inventory);

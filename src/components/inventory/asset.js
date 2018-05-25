@@ -58,6 +58,10 @@ class Asset extends Component {
         .catch(error => console.log(error) );
   }
 
+  delete(){
+    var asset = this.state;
+    this.props.deleteAsset(asset);
+  }
   render() {
     var profit_now_eur = this.state.profit_eur_current.toFixed(2);
     var profit_now_perc = this.state.profit_perc_current.toFixed(2);
@@ -67,8 +71,11 @@ class Asset extends Component {
     var profit_d_perc = this.state.profit_perc_d.toFixed(2);
 
 
-    var badge_class = (profit_now_perc > 0 ? 'badge badge-success':'badge badge-danger');
-    var prefix = profit_now_perc >= 0 ? '+' : '-'
+    var badge_class_now = (profit_now_perc > 0 ? 'badge badge-success':'badge badge-danger');
+    var prefix_now = profit_now_perc >= 0 ? '+' : '-';
+    var badge_class_d = (profit_d_perc > 0 ? 'badge badge-success':'badge badge-danger');
+    var prefix_d = profit_d_perc >= 0 ? '+' : '-';
+
     return (
       <div className="col asset" key={this.state.id}>
         <div className="asset-header">
@@ -82,22 +89,23 @@ class Asset extends Component {
         </div>
         <div className="inv text-left">
           <p><span className="badge badge-secondary">{this.state.date}</span></p>
-          <span className={'float-right '+badge_class}>{prefix} {profit_now_eur}&euro; / {(profit_now_perc*10).toFixed(2)}%</span>
+          <span className={'float-right '+badge_class_now}>{prefix_now} {profit_now_eur}&euro; / {(profit_now_perc*10).toFixed(2)}%</span>
           <p>  &#9921; {this.state.amount} x {this.state.price.toFixed(2)} &euro; </p>
-          <span className={'float-right '+badge_class}>{prefix} {profit_now_eur*amount}&euro;</span>
+          <span className={'float-right '+badge_class_now}>{prefix_now} {profit_now_eur*amount}&euro;</span>
           <p> = {(this.state.price*this.state.amount).toFixed(2)} &euro;</p>
           <hr/>
         </div>
         <div className="trade text-left">
           <p><span className="badge badge-secondary">{new Date(Date.now()).toLocaleString()}</span></p>
-          <span className={'float-right '+badge_class}>{prefix} {profit_d_eur}&euro; / {(profit_d_perc*10).toFixed(2)}%</span>
+          <span className={'float-right '+badge_class_d}>{prefix_d} {profit_d_eur}&euro; / {(profit_d_perc*10).toFixed(2)}%</span>
           <p> &#8645; {amount} * {price_now}&euro; </p>
-          <span className={'float-right '+badge_class}>{prefix} {profit_d_eur*amount}&euro;</span>
+          <span className={'float-right '+badge_class_d}>{prefix_d} {profit_d_eur*amount}&euro;</span>
           <p> =  {price_now*amount}&euro;</p>
           <hr />
         </div>
         <div className="actions">
           <button className="btn btn-secondary" onClick={this.update}>Update</button>
+          <button className="btn btn-secondary" onClick={this.delete.bind(this)}>Remove</button>
         </div>
       </div>
     );
