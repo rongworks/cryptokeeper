@@ -13,7 +13,7 @@ class AssetForm extends Component {
       quote:props.quote,
       amount: props.amount,
       price: props.price,
-      date: new Date(),//props.date,
+      date: props.date,
       price_current: 0,
       profit_eur_current: 0,
       profit_perc_current: 0,
@@ -60,10 +60,12 @@ class AssetForm extends Component {
             name="amount"
             onChange={this.handleInputChange.bind(this)}>
           </input>
-          <DatePicker
-            onChange={this.handleInputChange.bind(this)}
-            value={this.state.date}
-          />
+          <input type="text"
+            className="form-control"
+            placeholder="date"
+            name="date"
+            onChange={this.handleInputChange.bind(this)}>
+          </input>
 
         </div>
         </div>
