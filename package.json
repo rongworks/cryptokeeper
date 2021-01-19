@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "react": "^16.3.2",
-    "react-date-picker": "^6.10.1",
-    "react-dom": "^16.3.2",
-    "react-redux": "^5.0.7",
+    "react": "^16.14.0",
+    "react-date-picker": "^6.13.0",
+    "react-dom": "^16.14.0",
+    "react-redux": "^5.1.2",
     "react-scripts": "1.1.4"
   },
   "scripts": {
@@ -16,6 +16,6 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "redux": "^4.0.0"
+    "redux": "^4.0.5"
   }
 }

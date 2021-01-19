@@ -31,7 +31,7 @@ class Asset extends Component {
   }
 
   update(){
-    var api_url = 'https://cors.io/?https://api.cryptowat.ch/markets/'+this.state.market+'/'+this.state.asset+this.state.quote+'/summary';
+    var api_url = 'https://thingproxy.freeboard.io/fetch/https://api.cryptowat.ch/markets/'+this.state.market+'/'+this.state.asset+this.state.quote+'/summary';
     console.log('Get trades for'+this.state.asset+' at '+api_url);
     // https://api.cryptowat.ch/markets/gdax/btcusd/summary
 

@@ -28,24 +28,30 @@ class AssetForm extends Component {
         <form>
         <div className="row">
         <div className="col">
+
           <input type="text"
             className="form-control"
             placeholder="market"
             name="market"
             onChange={this.handleInputChange.bind(this)}>
           </input>
+          <label className="asset-form-label">Bought on market</label>
+
           <input type="text"
             className="form-control"
             placeholder="asset"
             name="asset"
             onChange={this.handleInputChange.bind(this)}>
           </input>
+          <label className="asset-form-label">Currency traded for</label>
+
           <input type="text"
             className="form-control"
             placeholder="quote"
             name="quote"
             onChange={this.handleInputChange.bind(this)}>
           </input>
+          <label className="asset-form-label">Currency traded with</label>
         </div>
         <div className="col">
           <input type="text"
@@ -54,18 +60,21 @@ class AssetForm extends Component {
             name="price"
             onChange={this.handleInputChange.bind(this)}>
           </input>
+          <label className="asset-form-label">Price per unit</label>
           <input type="text"
             className="form-control"
             placeholder="amount"
             name="amount"
             onChange={this.handleInputChange.bind(this)}>
           </input>
-          <input type="text"
+          <label className="asset-form-label">Amount currency bought</label>
+          <input type="date"
             className="form-control"
             placeholder="date"
             name="date"
             onChange={this.handleInputChange.bind(this)}>
           </input>
+          <label className="asset-form-label">Date of trade</label>
 
         </div>
         </div>
